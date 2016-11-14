@@ -1,3 +1,3 @@
 public enum Move {
-	FORWARD
+	FORWARD, TURN_LEFT, TURN_RIGHT
 }

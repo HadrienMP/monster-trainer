@@ -10,7 +10,7 @@ public class Trainer {
 		this.y = y;
 	}
 
-	public void move(Move moves) {
+	public void move(Move... moves) {
 		y++;
 	}
 
