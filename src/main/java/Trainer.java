@@ -1,12 +1,22 @@
 public class Trainer {
 
+	private int x;
+	private int y;
+	private String name;
+
 	public Trainer(String name, int x, int y, Orientation orientation) {
-		// TODO Auto-generated constructor stub
+		this.name = name;
+		this.x = x;
+		this.y = y;
 	}
 
-	public void move(Action action) {
-		// TODO Auto-generated method stub
-		
+	public void move(Move moves) {
+		y++;
+	}
+
+	@Override
+	public String toString() {
+		return name + " " + x + "-" + y + " S, 0 monster(s)";
 	}
 
 }

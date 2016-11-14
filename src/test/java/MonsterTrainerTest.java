@@ -14,7 +14,7 @@ public class MonsterTrainerTest {
 		monsterTrainer = new MonsterTrainer(gameMap, trainer);
 	
 		// Act
-		trainer.move(Action.FORWARD);
+		trainer.move(Move.FORWARD);
 				
 		// Assert
 		assertThat(trainer.toString()).isEqualTo("Michel 1-2 S, 0 monster(s)");
