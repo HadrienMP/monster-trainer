@@ -7,7 +7,7 @@
 # monster-trainer
 
 Le but de cet exercice est de modéliser un programme permettant de faire evoluer des dresseurs de monstres dans un monde ouvert.
-Le monde comporte des obstacles qui pourront empêcher le dresseur d'avancer. Il comportera également des montres que les dresseurs pourront capturer en se déplaçant.
+Le monde comporte des obstacles qui pourront empêcher le dresseur d'avancer. Il comportera également des monstres que les dresseurs pourront capturer en se déplaçant.
 
 Première User story
 -------------
@@ -129,7 +129,7 @@ Dans le fichier texte, les dresseurs seront indiqués comme suit :
 Pour des raisons de flexibilité, les dresseurs et leurs déplacements sont indiqués dans un fichier
 texte différent de celui du monde. Il est ainsi possible de mixer un ensemble de dresseurs avec
 un monde spécifique.
-Lorsqu’un dresseur arrive sur une case contenant des monstres, il le capture et le met dans son
+Lorsqu’un dresseur arrive sur une case contenant des monstres, il en capture un et le met dans son
 sac. Capturer un monstre prend une seconde. Il passe donc une seconde pour aller sur la case et
 une autre seconde pour capturer le monstre, soit deux secondes.
 Un dresseur ne peut pas aller sur une case où se trouve un obstacle. Les instructions
