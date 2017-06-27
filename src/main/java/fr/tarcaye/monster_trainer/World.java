@@ -1,7 +1,7 @@
 package fr.tarcaye.monster_trainer;
 
 public class World {
-    public World(int zidth, int height) {
+    public World(int width, int height) {
 
     }
 

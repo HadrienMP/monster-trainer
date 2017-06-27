@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MonsterTrainerTest {
+public class MonsterTrainerFeature {
 
     @Test
     public void a_trainer_that_does_not_move_stays_at_the_same_place() throws Exception {
