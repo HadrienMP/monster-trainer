@@ -15,4 +15,8 @@ public class World {
     public Coordinates whereIs(Trainer trainer) {
         return at;
     }
+
+    public void move(Trainer sacha, Move... moves) {
+
+    }
 }
