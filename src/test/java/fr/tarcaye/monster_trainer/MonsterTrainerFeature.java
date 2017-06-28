@@ -10,12 +10,12 @@ public class MonsterTrainerFeature {
     @Test
     public void non_moving_trainer() throws Exception {
         World world = new World(5, 6);
-        Trainer sacha = new Trainer("sacha");
-        Coordinates startPosition = new Coordinates(0, 0, Direction.NORTH);
-        world.place(sacha, startPosition);
+        Position start = new Position(0, 0, Direction.NORTH);
+        Trainer sacha = new Trainer("sacha", world, start);
 
-        Coordinates endPosition = world.whereIs(sacha);
-        assertThat(endPosition).isEqualTo(startPosition);
+        Position end = sacha.position();
+
+        assertThat(end).isEqualTo(start);
     }
 
     /**
@@ -29,13 +29,12 @@ public class MonsterTrainerFeature {
     @Test
     public void a_moving_trainer() throws Exception {
         World world = new World(5, 6);
-        Trainer sacha = new Trainer("sacha");
-        Coordinates startPosition = new Coordinates(0, 0, Direction.NORTH);
-        world.place(sacha, startPosition);
+        Position start = new Position(0, 0, Direction.NORTH);
+        Trainer sacha = new Trainer("sacha", world, start);
 
-        world.move(sacha, FORWARD, FORWARD, RIGHT, FORWARD, RIGHT, FORWARD, LEFT, FORWARD);
+        sacha.move(FORWARD, FORWARD, RIGHT, FORWARD, RIGHT, FORWARD, LEFT, FORWARD);
 
-        Coordinates endPosition = world.whereIs(sacha);
-        assertThat(endPosition).isEqualTo(new Coordinates(2, 1, Direction.SOUTH));
+        Position endPosition = sacha.position();
+        assertThat(endPosition).isEqualTo(new Position(2, 1, Direction.SOUTH));
     }
 }
