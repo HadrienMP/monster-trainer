@@ -1,7 +1,7 @@
 package fr.tarcaye.monster_trainer;
 
 public class Trainer {
-    private final Position position;
+    private Position position;
 
     public Trainer(String name, World world, Position startPosition) {
         this.position = startPosition;
@@ -12,5 +12,8 @@ public class Trainer {
     }
 
     public void move(Move... moves) {
+        for (Move move : moves) {
+            position = position.apply(move);
+        }
     }
 }

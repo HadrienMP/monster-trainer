@@ -3,20 +3,19 @@ package fr.tarcaye.monster_trainer;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
 public class Position {
-    private final int x;
-    private final int y;
+
+    private final Coordinate coordinate;
     private final Direction direction;
 
-    public Position(int x, int y, Direction direction) {
-        this.x = x;
-        this.y = y;
+    public Position(Coordinate coordinate, Direction direction) {
+        this.coordinate = coordinate;
         this.direction = direction;
     }
 
     public Position apply(Move move) {
-        return null;
+        return new Position(coordinate.apply(move, direction), direction.apply(move));
     }
 }
