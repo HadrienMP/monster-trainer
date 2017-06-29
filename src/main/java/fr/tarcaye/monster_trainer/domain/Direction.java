@@ -1,4 +1,6 @@
-package fr.tarcaye.monster_trainer;
+package fr.tarcaye.monster_trainer.domain;
+
+import fr.tarcaye.monster_trainer.common.CircularList;
 
 import java.util.Arrays;
 

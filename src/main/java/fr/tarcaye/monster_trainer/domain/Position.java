@@ -1,8 +1,10 @@
-package fr.tarcaye.monster_trainer;
+package fr.tarcaye.monster_trainer.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 @EqualsAndHashCode
 public class Position {

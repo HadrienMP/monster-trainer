@@ -1,8 +1,10 @@
-package fr.tarcaye.monster_trainer;
+package fr.tarcaye.monster_trainer.domain;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 @EqualsAndHashCode
 public class Coordinate {
@@ -15,12 +17,10 @@ public class Coordinate {
     }
 
     public Coordinate apply(Move move, Direction direction) {
-        switch (move) {
-            case FORWARD:
-                return forward(direction);
-            default:
-                return this;
+        if (move == Move.FORWARD) {
+            return forward(direction);
         }
+        return this;
     }
 
     private Coordinate forward(Direction direction) {

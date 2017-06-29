@@ -1,21 +1,26 @@
-package fr.tarcaye.monster_trainer;
+package fr.tarcaye.monster_trainer.domain;
 
+import fr.tarcaye.monster_trainer.domain.Coordinate;
+import fr.tarcaye.monster_trainer.domain.Position;
+import fr.tarcaye.monster_trainer.domain.Trainer;
+import fr.tarcaye.monster_trainer.domain.World;
 import org.junit.Test;
 
-import static fr.tarcaye.monster_trainer.Direction.*;
-import static fr.tarcaye.monster_trainer.Direction.NORTH;
-import static fr.tarcaye.monster_trainer.Move.*;
+import static fr.tarcaye.monster_trainer.domain.Direction.*;
+import static fr.tarcaye.monster_trainer.domain.Direction.NORTH;
+import static fr.tarcaye.monster_trainer.domain.Move.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MonsterTrainerFeature {
+public class MonsterTrainerFeatures {
 
     @Test
-    public void a_good_trainer_knows_its_place() throws Exception {
+    public void the_world_knows_where_the_trainer_is() throws Exception {
         World world = new World(5, 6);
+        Trainer sacha = new Trainer("sacha");
         Position start = new Position(new Coordinate(0, 0), NORTH);
-        Trainer sacha = new Trainer("sacha", world, start);
+        world.place(sacha, start);
 
-        Position end = sacha.position();
+        Position end = world.whereIs(sacha);
 
         assertThat(end).isEqualTo(start);
     }
@@ -24,7 +29,8 @@ public class MonsterTrainerFeature {
     public void a_trainer_can_move() throws Exception {
         World world = new World(5, 6);
         Position start = new Position(new Coordinate(0, 0), EAST);
-        Trainer sacha = new Trainer("sacha", world, start);
+        Trainer sacha = new Trainer("sacha");
+        world.place(sacha, start);
 
         /*
          * +------------+
@@ -35,22 +41,23 @@ public class MonsterTrainerFeature {
          * |            |
          * =------------+
          */
-        sacha.move(FORWARD, FORWARD,
+        world.move(sacha, FORWARD, FORWARD,
                    RIGHT, FORWARD,
                    RIGHT, FORWARD,
                    LEFT, FORWARD,
                    LEFT, FORWARD, FORWARD,
                    LEFT, FORWARD);
 
-        Position endPosition = sacha.position();
-        assertThat(endPosition).isEqualTo(new Position(new Coordinate(3, 1), NORTH));
+        Position end = world.whereIs(sacha);
+        assertThat(end).isEqualTo(new Position(new Coordinate(3, 1), NORTH));
     }
 
     @Test
     public void a_trainer_cannot_go_oustide_the_borders_of_the_world() throws Exception {
         World world = new World(1, 1);
         Coordinate start = new Coordinate(0, 0);
-        Trainer sacha = new Trainer("sacha", world, new Position(start, NORTH));
+        Trainer sacha = new Trainer("sacha");
+        world.place(sacha, new Position(start, NORTH));
 
         /*
          * Path the trainer would travel if it could go outside the borders
@@ -59,15 +66,15 @@ public class MonsterTrainerFeature {
          *    +---+
          *  v | ^ |
          *    +---+
-         *  >   >   >
+         *  >   >   >  E
          *
          */
-        sacha.move(FORWARD,
+        world.move(sacha, FORWARD,
                    LEFT, FORWARD,
                    LEFT, FORWARD, FORWARD,
                    LEFT, FORWARD, FORWARD, FORWARD);
 
-        Position endPosition = sacha.position();
+        Position endPosition = world.whereIs(sacha);
         assertThat(endPosition).isEqualTo(new Position(start, EAST));
     }
 }
