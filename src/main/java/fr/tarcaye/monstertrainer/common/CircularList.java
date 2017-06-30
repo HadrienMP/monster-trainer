@@ -1,4 +1,4 @@
-package fr.tarcaye.monster_trainer.common;
+package fr.tarcaye.monstertrainer.common;
 
 import java.util.ArrayList;
 import java.util.List;

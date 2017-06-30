@@ -1,14 +1,10 @@
-package fr.tarcaye.monster_trainer.domain;
+package fr.tarcaye.monstertrainer.domain;
 
-import fr.tarcaye.monster_trainer.domain.Coordinate;
-import fr.tarcaye.monster_trainer.domain.Position;
-import fr.tarcaye.monster_trainer.domain.Trainer;
-import fr.tarcaye.monster_trainer.domain.World;
 import org.junit.Test;
 
-import static fr.tarcaye.monster_trainer.domain.Direction.*;
-import static fr.tarcaye.monster_trainer.domain.Direction.NORTH;
-import static fr.tarcaye.monster_trainer.domain.Move.*;
+import static fr.tarcaye.monstertrainer.domain.Direction.*;
+import static fr.tarcaye.monstertrainer.domain.Direction.NORTH;
+import static fr.tarcaye.monstertrainer.domain.Move.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MonsterTrainerFeatures {
