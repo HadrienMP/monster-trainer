@@ -18,26 +18,26 @@ public class Position {
     }
 
     public Position apply(Move move) {
-        if (move == Move.FORWARD) {
-            return new Position(forward(), direction);
-        } else {
-            return new Position(coordinate, direction.apply(move));
-        }
+        return new Position(applyToCoordinate(move), direction.apply(move));
     }
 
-    private Coordinate forward() {
-        int x = coordinate.getX();
-        int y = coordinate.getY();
-        switch (direction) {
-            case EAST:
-                return new Coordinate(x + 1, y);
-            case SOUTH:
-                return new Coordinate(x, y + 1);
-            case WEST:
-                return new Coordinate(x - 1, y);
-            case NORTH:
-            default:
-                return new Coordinate(x, y - 1);
+    private Coordinate applyToCoordinate(Move move) {
+        if (move == Move.FORWARD) {
+            int x = coordinate.getX();
+            int y = coordinate.getY();
+
+            switch (direction) {
+                case EAST:
+                    return new Coordinate(x + 1, y);
+                case SOUTH:
+                    return new Coordinate(x, y + 1);
+                case WEST:
+                    return new Coordinate(x - 1, y);
+                case NORTH:
+                    return new Coordinate(x, y - 1);
+            }
         }
+
+        return coordinate;
     }
 }
