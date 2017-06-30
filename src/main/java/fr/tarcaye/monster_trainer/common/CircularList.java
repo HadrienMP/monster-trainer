@@ -9,12 +9,13 @@ public class CircularList<T> extends ArrayList<T> {
     }
 
     public T before(T t) {
-        int j = indexOf(t)-1;
+        int j = indexOf(t) - 1;
         j = j < 0 ? this.size() - 1 : j;
         return this.get(j);
     }
+
     public T after(T t) {
-        int j = indexOf(t)+1;
+        int j = indexOf(t) + 1;
         j = j >= this.size() ? 0 : j;
         return this.get(j);
     }
