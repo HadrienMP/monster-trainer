@@ -7,17 +7,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Position {
+class Position {
 
     private final Coordinate coordinate;
     private final Direction direction;
 
-    public Position(Coordinate coordinate, Direction direction) {
+    Position(Coordinate coordinate, Direction direction) {
         this.coordinate = coordinate;
         this.direction = direction;
     }
 
-    public Position apply(Move move) {
+    static Position position(int x, int y, Direction direction) {
+        return new Position(new Coordinate(x, y), direction);
+    }
+
+    Position apply(Move move) {
         return new Position(applyToCoordinate(move), direction.apply(move));
     }
 

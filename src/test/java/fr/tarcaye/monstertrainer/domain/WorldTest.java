@@ -10,6 +10,8 @@ import java.util.Collection;
 
 import static fr.tarcaye.monstertrainer.domain.Direction.*;
 import static fr.tarcaye.monstertrainer.domain.Move.FORWARD;
+import static fr.tarcaye.monstertrainer.domain.Position.position;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(JUnitParamsRunner.class)
@@ -19,23 +21,21 @@ public class WorldTest {
     @Parameters(method = "againstTheBorders")
     public void a_trainer_cannot_go_outside_the_borders(World world, Position start) throws Exception {
         world.placeTrainerAt(start);
-
         world.moveTrainer(FORWARD);
-
         assertThat(world.whereIsTrainer().getCoordinate()).isEqualTo(start.getCoordinate());
     }
 
     public Collection<Collection<Object>> againstTheBorders() {
-        return Arrays.asList(
+        return asList(
                 // X
-                Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), EAST)),
-                Arrays.asList(new World(2,1), new Position(new Coordinate(1,0), EAST)),
-                Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), WEST)),
+                asList(new World(1,1), position(0,0, EAST)),
+                asList(new World(2,1), position(1,0, EAST)),
+                asList(new World(1,1), position(0,0, WEST)),
 
                 // Y
-                Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), SOUTH)),
-                Arrays.asList(new World(1,2), new Position(new Coordinate(0,1), SOUTH)),
-                Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), NORTH))
+                asList(new World(1,1), position(0,0, SOUTH)),
+                asList(new World(1,2), position(0,1, SOUTH)),
+                asList(new World(1,1), position(0,0, NORTH))
         );
     }
 
@@ -44,11 +44,11 @@ public class WorldTest {
         // GIVEN
         World world = new World(2, 2);
 
-        world.placeMountainAt(new Coordinate(1,0));
-        world.placeMountainAt(new Coordinate(0,1));
-        world.placeMountainAt(new Coordinate(1,1));
+        world.placeMountainsAt(new Coordinate(1,0),
+                new Coordinate(0,1),
+                new Coordinate(1,1));
 
-        Position startPosition = new Position(new Coordinate(0, 0), EAST);
+        Position startPosition = position(0, 0, EAST);
         world.placeTrainerAt(startPosition);
 
         // WHEN

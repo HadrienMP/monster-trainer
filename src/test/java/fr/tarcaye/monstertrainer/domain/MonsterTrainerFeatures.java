@@ -2,9 +2,10 @@ package fr.tarcaye.monstertrainer.domain;
 
 import org.junit.Test;
 
-import static fr.tarcaye.monstertrainer.domain.Direction.*;
+import static fr.tarcaye.monstertrainer.domain.Direction.EAST;
 import static fr.tarcaye.monstertrainer.domain.Direction.NORTH;
 import static fr.tarcaye.monstertrainer.domain.Move.*;
+import static fr.tarcaye.monstertrainer.domain.Position.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MonsterTrainerFeatures {
@@ -23,7 +24,7 @@ public class MonsterTrainerFeatures {
 
         world.moveTrainer(anItinerary());
 
-        trainerWillBeAt(new Position(new Coordinate(3, 1), NORTH), world);
+        trainerWillBeAt(position(3, 1, NORTH), world);
     }
 
     @Test
@@ -42,10 +43,10 @@ public class MonsterTrainerFeatures {
         World world = new World(5, 6);
         givenTrainerIn(world);
 
-        world.placeMountainAt(new Coordinate(2, 0));
-        world.placeMountainAt(new Coordinate(2, 1));
-        world.placeMountainAt(new Coordinate(0, 3));
-        world.placeMountainAt(new Coordinate(3, 1));
+        world.placeMountainsAt(new Coordinate(2, 0),
+                new Coordinate(2, 1),
+                new Coordinate(0, 3),
+                new Coordinate(3, 1));
 
         // WHEN
 
@@ -62,7 +63,7 @@ public class MonsterTrainerFeatures {
         world.moveTrainer(anItinerary());
 
         // THEN
-        trainerWillBeAt(new Position(new Coordinate(3, 2), NORTH), world);
+        trainerWillBeAt(position(3, 2, NORTH), world);
     }
 
     /*
@@ -81,7 +82,7 @@ public class MonsterTrainerFeatures {
     }
 
     private Position givenTrainerIn(World world) {
-        Position start = new Position(new Coordinate(0, 0), EAST);
+        Position start = position(0, 0, EAST);
         world.placeTrainerAt(start);
         return start;
     }
@@ -90,4 +91,5 @@ public class MonsterTrainerFeatures {
         Position end = world.whereIsTrainer();
         assertThat(end).isEqualTo(start);
     }
+
 }

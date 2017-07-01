@@ -5,33 +5,35 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static java.util.Arrays.asList;
+
 @ToString
-public class World {
+class World {
     private final Borders borders;
-    private Position trainerPosition;
+    private Position trainer;
     private Collection<Coordinate> mountains = new ArrayList<>();
 
-    public World(int width, int height) {
+    World(int width, int height) {
         this.borders = new Borders(width-1, height-1);
     }
 
-    public void placeTrainerAt(Position position) {
-        this.trainerPosition = position;
+    void placeTrainerAt(Position position) {
+        this.trainer = position;
     }
 
-    public void placeMountainAt(Coordinate coordinate) {
-        mountains.add(coordinate);
+    void placeMountainsAt(Coordinate... coordinates) {
+        mountains.addAll(asList(coordinates));
     }
 
-    public Position whereIsTrainer() {
-        return trainerPosition;
+    Position whereIsTrainer() {
+        return trainer;
     }
 
-    public void moveTrainer(Move... moves) {
+    void moveTrainer(Move... moves) {
         for (Move move : moves) {
-            Position wantedPosition = trainerPosition.apply(move);
+            Position wantedPosition = trainer.apply(move);
             if (isLegal(wantedPosition.getCoordinate())) {
-                trainerPosition = wantedPosition;
+                trainer = wantedPosition;
             }
         }
     }
