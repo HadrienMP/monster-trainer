@@ -1,4 +1,6 @@
-package fr.tarcaye.monstertrainer.domain;
+package fr.tarcaye.monstertrainer.domain.world;
+
+import fr.tarcaye.monstertrainer.domain.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,22 +14,22 @@ public class WorldBuilder {
     private Collection<Coordinate> mountains = new ArrayList<>();
     private Collection<Coordinate> monsters = new ArrayList<>();
 
-    WorldBuilder withSize(int width, int height) {
+    public WorldBuilder withSize(int width, int height) {
         borders = new Borders(width - 1, height - 1);
         return this;
     }
 
-    WorldBuilder withMountainsAt(Coordinate... coordinates) {
+    public WorldBuilder withMountainsAt(Coordinate... coordinates) {
         mountains.addAll(asList(coordinates));
         return this;
     }
 
-    WorldBuilder withMonstersAt(Coordinate... coordinates) {
+    public WorldBuilder withMonstersAt(Coordinate... coordinates) {
         monsters.addAll(asList(coordinates));
         return this;
     }
 
-    World build() {
+    public World build() {
         Objects.requireNonNull(borders);
         return new World(borders, mountains, monsters);
     }

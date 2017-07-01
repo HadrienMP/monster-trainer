@@ -1,5 +1,6 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.world.WorldBuilder;
 import org.junit.Test;
 
 public class WorldBuilderTest {

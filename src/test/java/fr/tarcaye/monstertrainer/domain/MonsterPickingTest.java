@@ -1,5 +1,6 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.world.World;
 import org.junit.Test;
 
 import static fr.tarcaye.monstertrainer.domain.Direction.EAST;
@@ -13,11 +14,11 @@ public class MonsterPickingTest {
     @Test
     public void cannot_pick_any_monsters_when_none_is_on_the_map() throws Exception {
         World world = World.builder().withSize(2, 1).build();
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        world.moveTrainer(FORWARD);
+        trainer.move(FORWARD);
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(0);
+        assertThat(trainer.countMonsters()).isEqualTo(0);
     }
 
     @Test
@@ -26,11 +27,11 @@ public class MonsterPickingTest {
                 .withSize(2, 1)
                 .withMonstersAt(new Coordinate(1, 0))
                 .build();
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        world.moveTrainer(FORWARD);
+        trainer.move(FORWARD);
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(1);
+        assertThat(trainer.countMonsters()).isEqualTo(1);
     }
 
     @Test
@@ -39,11 +40,11 @@ public class MonsterPickingTest {
                 .withSize(2, 2)
                 .withMonstersAt(new Coordinate(1, 0), new Coordinate(1, 1), new Coordinate(0, 1))
                 .build();
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        world.moveTrainer(FORWARD);
+        trainer.move(FORWARD);
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(1);
+        assertThat(trainer.countMonsters()).isEqualTo(1);
     }
 
     @Test
@@ -52,11 +53,11 @@ public class MonsterPickingTest {
                 .withSize(2, 1)
                 .withMonstersAt(new Coordinate(1, 0))
                 .build();
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        world.moveTrainer(FORWARD, LEFT, LEFT, FORWARD, LEFT, LEFT, FORWARD);
+        trainer.move(FORWARD, LEFT, LEFT, FORWARD, LEFT, LEFT, FORWARD);
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(1);
+        assertThat(trainer.countMonsters()).isEqualTo(1);
     }
 
     @Test
@@ -66,11 +67,11 @@ public class MonsterPickingTest {
                 .withMonstersAt(new Coordinate(1, 0), new Coordinate(1, 0))
                 .build();
 
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        world.moveTrainer(FORWARD, LEFT, LEFT);
+        trainer.move(FORWARD, LEFT, LEFT);
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(1);
+        assertThat(trainer.countMonsters()).isEqualTo(1);
     }
 
     @Test
@@ -80,8 +81,8 @@ public class MonsterPickingTest {
                 .withMonstersAt(new Coordinate(0, 0))
                 .build();
 
-        world.placeTrainerAt(position(0, 0, EAST));
+        Trainer trainer = new Trainer(world, position(0, 0, EAST));
 
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(1);
+        assertThat(trainer.countMonsters()).isEqualTo(1);
     }
 }

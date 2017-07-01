@@ -1,5 +1,8 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.world.IllegalCoordinateException;
+import fr.tarcaye.monstertrainer.domain.world.World;
+import fr.tarcaye.monstertrainer.domain.world.WorldBuilder;
 import org.junit.Test;
 
 import static fr.tarcaye.monstertrainer.domain.Direction.EAST;
@@ -12,29 +15,32 @@ public class MonsterTrainerFeatures {
 
     @Test
     public void the_world_knows_where_the_trainer_is() throws Exception {
-        World world = aWorld().build();
-        Position start = givenTrainerIn(world);
-        trainerWillBeAt(start, world);
+        Position start = position(0, 0, EAST);
+
+        Trainer trainer = new Trainer(aWorld().build(), start);
+
+        assertThat(trainer.locate()).isEqualTo(start);
     }
 
     @Test
     public void a_trainer_can_move() throws Exception {
         World world = aWorld().build();
-        givenTrainerIn(world);
+        Trainer trainer = aTrainerIn(world);
 
-        world.moveTrainer(anItinerary());
+        trainer.move(anItinerary());
 
-        trainerWillBeAt(position(4, 1, NORTH), world);
+        assertThat(trainer.locate()).isEqualTo(position(4, 1, NORTH));
     }
 
     @Test
     public void a_trainer_cannot_go_oustide_the_borders_of_the_world() throws Exception {
         World world = aWorld().withSize(1,1).build();
-        Coordinate start = givenTrainerIn(world).getCoordinate();
+        Trainer trainer = aTrainerIn(world);
+        Position start = trainer.locate();
 
-        world.moveTrainer(anItinerary());
+        trainer.move(anItinerary());
 
-        trainerWillBeAt(new Position(start, NORTH), world);
+        assertThat(trainer.locate()).isEqualTo(new Position(start.getCoordinate(), NORTH));
     }
 
     @Test
@@ -48,13 +54,13 @@ public class MonsterTrainerFeatures {
                         new Coordinate(3, 1)
                 )
                 .build();
-        givenTrainerIn(world);
+        Trainer trainer = aTrainerIn(world);
 
         // WHEN
-        world.moveTrainer(anItinerary());
+        trainer.move(anItinerary());
 
         // THEN
-        trainerWillBeAt(position(3, 2, NORTH), world);
+        assertThat(trainer.locate()).isEqualTo(position(3, 2, NORTH));
     }
 
     @Test
@@ -76,18 +82,23 @@ public class MonsterTrainerFeatures {
                         new Coordinate(2, 2)
                 )
                 .build();
-        givenTrainerIn(world);
+
+        Trainer trainer = aTrainerIn(world);
 
         // WHEN
-        world.moveTrainer(anItinerary());
+        trainer.move(anItinerary());
 
         // THEN
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(4);
+        assertThat(trainer.countMonsters()).isEqualTo(4);
     }
-
 
     private static WorldBuilder aWorld() {
         return World.builder().withSize(5,6);
+    }
+
+
+    private Trainer aTrainerIn(World world) throws IllegalCoordinateException {
+        return new Trainer(world, position(0, 0, EAST));
     }
 
     /**
@@ -108,17 +119,6 @@ public class MonsterTrainerFeatures {
                 LEFT, FORWARD, FORWARD, FORWARD,
                 LEFT, FORWARD, FORWARD
         };
-    }
-
-    private static Position givenTrainerIn(World world) {
-        Position start = position(0, 0, EAST);
-        world.placeTrainerAt(start);
-        return start;
-    }
-
-    private static void trainerWillBeAt(Position start, World world) {
-        Position end = world.whereIsTrainer();
-        assertThat(end).isEqualTo(start);
     }
 
 }

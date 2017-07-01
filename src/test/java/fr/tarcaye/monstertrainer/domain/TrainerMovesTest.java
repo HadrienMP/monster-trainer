@@ -1,5 +1,7 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.world.World;
+import fr.tarcaye.monstertrainer.domain.world.WorldBuilder;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Test;
@@ -19,9 +21,9 @@ public class TrainerMovesTest {
     @Test
     @Parameters(method = "againstTheBorders")
     public void a_trainer_cannot_go_outside_the_borders(World world, Position start) throws Exception {
-        world.placeTrainerAt(start);
-        world.moveTrainer(FORWARD);
-        assertThat(world.whereIsTrainer().getCoordinate()).isEqualTo(start.getCoordinate());
+        Trainer trainer = new Trainer(world, start);
+        trainer.move(FORWARD);
+        assertThat(trainer.locate().getCoordinate()).isEqualTo(start.getCoordinate());
     }
 
     public Collection<Collection<Object>> againstTheBorders() {
@@ -49,15 +51,14 @@ public class TrainerMovesTest {
                 )
                 .build();
 
-        Position startPosition = position(0, 0, EAST);
-        world.placeTrainerAt(startPosition);
+        Position start = position(0, 0, EAST);
+        Trainer trainer = new Trainer(world, start);
 
         // WHEN
-        world.moveTrainer(FORWARD);
+        trainer.move(FORWARD);
 
         // THEN
-        Position endPosition = world.whereIsTrainer();
-        assertThat(endPosition).isEqualTo(startPosition);
+        assertThat(trainer.locate()).isEqualTo(start);
     }
 
     private WorldBuilder aWorld(int width, int height) {

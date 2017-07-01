@@ -26,22 +26,6 @@ class Position {
     }
 
     private Coordinate applyToCoordinate(Move move) {
-        if (move == Move.FORWARD) {
-            int x = coordinate.getX();
-            int y = coordinate.getY();
-
-            switch (direction) {
-                case EAST:
-                    return new Coordinate(x + 1, y);
-                case SOUTH:
-                    return new Coordinate(x, y + 1);
-                case WEST:
-                    return new Coordinate(x - 1, y);
-                case NORTH:
-                    return new Coordinate(x, y - 1);
-            }
-        }
-
-        return coordinate;
+        return move == Move.FORWARD ? coordinate.oneStep(direction) : coordinate;
     }
 }
