@@ -12,14 +12,14 @@ public class MonsterTrainerFeatures {
 
     @Test
     public void the_world_knows_where_the_trainer_is() throws Exception {
-        World world = aWorld();
+        World world = aWorld().build();
         Position start = givenTrainerIn(world);
         trainerWillBeAt(start, world);
     }
 
     @Test
     public void a_trainer_can_move() throws Exception {
-        World world = aWorld();
+        World world = aWorld().build();
         givenTrainerIn(world);
 
         world.moveTrainer(anItinerary());
@@ -29,7 +29,7 @@ public class MonsterTrainerFeatures {
 
     @Test
     public void a_trainer_cannot_go_oustide_the_borders_of_the_world() throws Exception {
-        World world = new World(1, 1);
+        World world = aWorld().withSize(1,1).build();
         Coordinate start = givenTrainerIn(world).getCoordinate();
 
         world.moveTrainer(anItinerary());
@@ -40,13 +40,15 @@ public class MonsterTrainerFeatures {
     @Test
     public void a_trainer_cannot_go_on_a_mountain() throws Exception {
         // GIVEN
-        World world = aWorld();
+        World world = aWorld()
+                .withMountainsAt(
+                        new Coordinate(2, 0),
+                        new Coordinate(2, 1),
+                        new Coordinate(0, 3),
+                        new Coordinate(3, 1)
+                )
+                .build();
         givenTrainerIn(world);
-
-        world.placeMountainsAt(new Coordinate(2, 0),
-                new Coordinate(2, 1),
-                new Coordinate(0, 3),
-                new Coordinate(3, 1));
 
         // WHEN
         world.moveTrainer(anItinerary());
@@ -58,35 +60,37 @@ public class MonsterTrainerFeatures {
     @Test
     public void a_trainer_picks_up_the_monsters_he_meets() throws Exception {
         // GIVEN
-        World world = aWorld();
+        World world = aWorld()
+                .withMonstersAt(
+                        // Picked
+                        new Coordinate(0, 0),
+                        new Coordinate(2, 0),
+                        new Coordinate(1, 1),
+                        new Coordinate(3, 3),
+
+                        // Not picked
+                        new Coordinate(1, 1),
+                        new Coordinate(1, 1),
+                        new Coordinate(2, 0),
+                        new Coordinate(4, 0),
+                        new Coordinate(2, 2)
+                )
+                .build();
         givenTrainerIn(world);
-
-        world.placeMonstersAt(
-                // Picked
-                new Coordinate(0, 0),
-                new Coordinate(1, 1),
-                new Coordinate(1, 1),
-                new Coordinate(1, 1),
-                new Coordinate(3, 3),
-
-                // Not picked
-                new Coordinate(4, 0),
-                new Coordinate(2, 2)
-        );
 
         // WHEN
         world.moveTrainer(anItinerary());
 
         // THEN
-        assertThat(world.monstersPickedByTrainer()).isEqualTo(5);
+        assertThat(world.monstersPickedByTrainer()).isEqualTo(4);
     }
 
 
-    private static World aWorld() {
-        return new World(5, 6);
+    private static WorldBuilder aWorld() {
+        return World.builder().withSize(5,6);
     }
 
-    /*
+    /**
         01234
        +-----
       0|>>v
@@ -96,12 +100,14 @@ public class MonsterTrainerFeatures {
 
      */
     private static Move[] anItinerary() {
-        return new Move[]{FORWARD, FORWARD,
+        return new Move[] {
+                FORWARD, FORWARD,
                 RIGHT, FORWARD,
                 RIGHT, FORWARD,
                 LEFT, FORWARD, FORWARD,
                 LEFT, FORWARD, FORWARD, FORWARD,
-                LEFT, FORWARD, FORWARD};
+                LEFT, FORWARD, FORWARD
+        };
     }
 
     private static Position givenTrainerIn(World world) {
