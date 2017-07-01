@@ -12,65 +12,82 @@ public class MonsterTrainerFeatures {
     @Test
     public void the_world_knows_where_the_trainer_is() throws Exception {
         World world = new World(5, 6);
-        Trainer sacha = new Trainer("sacha");
-        Position start = new Position(new Coordinate(0, 0), NORTH);
-        world.place(sacha, start);
-
-        Position end = world.whereIs(sacha);
-
-        assertThat(end).isEqualTo(start);
+        Position start = givenTrainerIn(world);
+        trainerWillBeAt(start, world);
     }
 
     @Test
     public void a_trainer_can_move() throws Exception {
         World world = new World(5, 6);
-        Position start = new Position(new Coordinate(0, 0), EAST);
-        Trainer sacha = new Trainer("sacha");
-        world.place(sacha, start);
+        givenTrainerIn(world);
 
-        /*
-         * +------------+
-         * | > > v      |
-         * |   v < E    |
-         * |   > > ^    |
-         * |            |
-         * |            |
-         * =------------+
-         */
-        world.move(sacha, FORWARD, FORWARD,
-                   RIGHT, FORWARD,
-                   RIGHT, FORWARD,
-                   LEFT, FORWARD,
-                   LEFT, FORWARD, FORWARD,
-                   LEFT, FORWARD);
+        world.moveTrainer(anItinerary());
 
-        Position end = world.whereIs(sacha);
-        assertThat(end).isEqualTo(new Position(new Coordinate(3, 1), NORTH));
+        trainerWillBeAt(new Position(new Coordinate(3, 1), NORTH), world);
     }
 
     @Test
     public void a_trainer_cannot_go_oustide_the_borders_of_the_world() throws Exception {
         World world = new World(1, 1);
-        Coordinate start = new Coordinate(0, 0);
-        Trainer sacha = new Trainer("sacha");
-        world.place(sacha, new Position(start, NORTH));
+        Coordinate start = givenTrainerIn(world).getCoordinate();
+
+        world.moveTrainer(anItinerary());
+
+        trainerWillBeAt(new Position(start, EAST), world);
+    }
+
+    @Test
+    public void a_trainer_cannot_go_on_a_mountain() throws Exception {
+        // GIVEN
+        World world = new World(5, 6);
+        givenTrainerIn(world);
+
+        world.placeMountainAt(new Coordinate(2, 0));
+        world.placeMountainAt(new Coordinate(2, 1));
+        world.placeMountainAt(new Coordinate(0, 3));
+        world.placeMountainAt(new Coordinate(3, 1));
+
+        // WHEN
 
         /*
-         * Path the trainer would travel if it could go outside the borders
          *
-         *  v   <
-         *    +---+
-         *  v | ^ |
-         *    +---+
-         *  >   >   >  E
-         *
+         * +------------+
+         * | > v X      |
+         * | v < X X    |
+         * | > > > E    |
+         * | X          |
+         * |            |
+         * =------------+
          */
-        world.move(sacha, FORWARD,
-                   LEFT, FORWARD,
-                   LEFT, FORWARD, FORWARD,
-                   LEFT, FORWARD, FORWARD, FORWARD);
+        world.moveTrainer(anItinerary());
 
-        Position endPosition = world.whereIs(sacha);
-        assertThat(endPosition).isEqualTo(new Position(start, EAST));
+        // THEN
+        trainerWillBeAt(new Position(new Coordinate(3, 2), NORTH), world);
+    }
+
+    /*
+        >>v
+         v< E
+         v  ^
+         >>>^
+     */
+    private Move[] anItinerary() {
+        return new Move[]{FORWARD, FORWARD,
+                RIGHT, FORWARD,
+                RIGHT, FORWARD,
+                LEFT, FORWARD, FORWARD,
+                LEFT, FORWARD, FORWARD, FORWARD,
+                LEFT, FORWARD, FORWARD};
+    }
+
+    private Position givenTrainerIn(World world) {
+        Position start = new Position(new Coordinate(0, 0), EAST);
+        world.placeTrainerAt(start);
+        return start;
+    }
+
+    private void trainerWillBeAt(Position start, World world) {
+        Position end = world.whereIsTrainer();
+        assertThat(end).isEqualTo(start);
     }
 }

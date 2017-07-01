@@ -16,17 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WorldTest {
 
     @Test
-    @Parameters(method = "illegalPositions")
+    @Parameters(method = "againstTheBorders")
     public void a_trainer_cannot_go_outside_the_borders(World world, Position start) throws Exception {
-        Trainer sacha = new Trainer("sacha");
-        world.place(sacha, start);
+        world.placeTrainerAt(start);
 
-        world.move(sacha, FORWARD);
+        world.moveTrainer(FORWARD);
 
-        assertThat(world.whereIs(sacha).getCoordinate()).isEqualTo(start.getCoordinate());
+        assertThat(world.whereIsTrainer().getCoordinate()).isEqualTo(start.getCoordinate());
     }
 
-    public Collection<Collection<Object>> illegalPositions() {
+    public Collection<Collection<Object>> againstTheBorders() {
         return Arrays.asList(
                 // X
                 Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), EAST)),
@@ -38,5 +37,25 @@ public class WorldTest {
                 Arrays.asList(new World(1,2), new Position(new Coordinate(0,1), SOUTH)),
                 Arrays.asList(new World(1,1), new Position(new Coordinate(0,0), NORTH))
         );
+    }
+
+    @Test
+    public void a_trainer_cannot_go_over_a_mountain() throws Exception {
+        // GIVEN
+        World world = new World(2, 2);
+
+        world.placeMountainAt(new Coordinate(1,0));
+        world.placeMountainAt(new Coordinate(0,1));
+        world.placeMountainAt(new Coordinate(1,1));
+
+        Position startPosition = new Position(new Coordinate(0, 0), EAST);
+        world.placeTrainerAt(startPosition);
+
+        // WHEN
+        world.moveTrainer(FORWARD);
+
+        // THEN
+        Position endPosition = world.whereIsTrainer();
+        assertThat(endPosition).isEqualTo(startPosition);
     }
 }
