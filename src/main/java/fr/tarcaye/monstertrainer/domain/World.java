@@ -41,4 +41,12 @@ class World {
     private boolean isLegal(Coordinate wantedCoordinate) {
         return borders.isInside(wantedCoordinate) && !mountains.contains(wantedCoordinate);
     }
+
+    public void placeMonstersAt(Coordinate... coordinates) {
+
+    }
+
+    public int monstersPickedByTrainer() {
+        return 0;
+    }
 }
