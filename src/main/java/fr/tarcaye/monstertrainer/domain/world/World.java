@@ -26,7 +26,6 @@ public class World {
     }
 
     public void moveTrainerTo(Coordinate coordinate) throws IllegalCoordinateException {
-        // todo test when trainer is placed outside the borders
         if (isLegal(coordinate)) {
             previousTrainerPlace = currentTrainerPlace;
             currentTrainerPlace = coordinate;
