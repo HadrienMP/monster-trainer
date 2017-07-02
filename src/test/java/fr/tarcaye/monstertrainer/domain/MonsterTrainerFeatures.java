@@ -24,8 +24,7 @@ public class MonsterTrainerFeatures {
 
     @Test
     public void a_trainer_can_move() throws Exception {
-        World world = aWorld().build();
-        Trainer trainer = aTrainerIn(world);
+        Trainer trainer = aTrainerIn(aWorld());
 
         trainer.move(anItinerary());
 
@@ -34,8 +33,7 @@ public class MonsterTrainerFeatures {
 
     @Test
     public void a_trainer_cannot_go_oustide_the_borders_of_the_world() throws Exception {
-        World world = aWorld().withSize(1,1).build();
-        Trainer trainer = aTrainerIn(world);
+        Trainer trainer = aTrainerIn(aWorld().withSize(1,1));
         Position start = trainer.locate();
 
         trainer.move(anItinerary());
@@ -46,14 +44,13 @@ public class MonsterTrainerFeatures {
     @Test
     public void a_trainer_cannot_go_on_a_mountain() throws Exception {
         // GIVEN
-        World world = aWorld()
+        WorldBuilder world = aWorld()
                 .withMountainsAt(
                         new Coordinate(2, 0),
                         new Coordinate(2, 1),
                         new Coordinate(0, 3),
                         new Coordinate(3, 1)
-                )
-                .build();
+                );
         Trainer trainer = aTrainerIn(world);
 
         // WHEN
@@ -66,7 +63,7 @@ public class MonsterTrainerFeatures {
     @Test
     public void a_trainer_picks_up_the_monsters_he_meets() throws Exception {
         // GIVEN
-        World world = aWorld()
+        WorldBuilder world = aWorld()
                 .withMonstersAt(
                         // Picked
                         new Coordinate(0, 0),
@@ -80,8 +77,7 @@ public class MonsterTrainerFeatures {
                         new Coordinate(2, 0),
                         new Coordinate(4, 0),
                         new Coordinate(2, 2)
-                )
-                .build();
+                );
 
         Trainer trainer = aTrainerIn(world);
 
@@ -97,8 +93,8 @@ public class MonsterTrainerFeatures {
     }
 
 
-    private Trainer aTrainerIn(World world) throws IllegalCoordinateException {
-        return new Trainer(world, position(0, 0, EAST));
+    private Trainer aTrainerIn(WorldBuilder world) throws IllegalCoordinateException {
+        return new Trainer(world.build(), position(0, 0, EAST));
     }
 
     /**
