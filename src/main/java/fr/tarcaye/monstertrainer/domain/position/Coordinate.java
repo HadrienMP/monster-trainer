@@ -1,4 +1,4 @@
-package fr.tarcaye.monstertrainer.domain;
+package fr.tarcaye.monstertrainer.domain.position;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +11,7 @@ public class Coordinate {
     private final int x;
     private final int y;
 
-    Coordinate(int x, int y) {
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }

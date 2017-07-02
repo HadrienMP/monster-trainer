@@ -1,12 +1,13 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.position.Coordinate;
 import fr.tarcaye.monstertrainer.domain.world.World;
 import org.junit.Test;
 
-import static fr.tarcaye.monstertrainer.domain.Direction.EAST;
+import static fr.tarcaye.monstertrainer.domain.position.Direction.EAST;
 import static fr.tarcaye.monstertrainer.domain.Move.FORWARD;
 import static fr.tarcaye.monstertrainer.domain.Move.LEFT;
-import static fr.tarcaye.monstertrainer.domain.Position.position;
+import static fr.tarcaye.monstertrainer.domain.position.Position.position;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MonsterPickingTest {

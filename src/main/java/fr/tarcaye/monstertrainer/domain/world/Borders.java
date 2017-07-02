@@ -1,6 +1,6 @@
 package fr.tarcaye.monstertrainer.domain.world;
 
-import fr.tarcaye.monstertrainer.domain.Coordinate;
+import fr.tarcaye.monstertrainer.domain.position.Coordinate;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

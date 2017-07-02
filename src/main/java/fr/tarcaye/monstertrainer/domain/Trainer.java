@@ -1,5 +1,6 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.position.Position;
 import fr.tarcaye.monstertrainer.domain.world.IllegalCoordinateException;
 import fr.tarcaye.monstertrainer.domain.world.World;
 
@@ -11,7 +12,7 @@ public class Trainer {
     public Trainer(World world, Position position) throws IllegalCoordinateException {
         this.world = world;
         this.position = position;
-        world.placeTrainerAt(position.getCoordinate());
+        world.moveTrainerTo(position.getCoordinate());
         pickMonsterUp();
     }
 
@@ -24,7 +25,7 @@ public class Trainer {
     private void move(Move move) {
         Position wamtedPosition = position.apply(move);
         try {
-            world.placeTrainerAt(wamtedPosition.getCoordinate());
+            world.moveTrainerTo(wamtedPosition.getCoordinate());
             position = wamtedPosition;
         } catch (IllegalCoordinateException e) {
             // nothing to do

@@ -1,5 +1,7 @@
 package fr.tarcaye.monstertrainer.domain;
 
+import fr.tarcaye.monstertrainer.domain.position.Coordinate;
+import fr.tarcaye.monstertrainer.domain.position.Position;
 import fr.tarcaye.monstertrainer.domain.world.World;
 import fr.tarcaye.monstertrainer.domain.world.WorldBuilder;
 import junitparams.JUnitParamsRunner;
@@ -9,9 +11,9 @@ import org.junit.runner.RunWith;
 
 import java.util.Collection;
 
-import static fr.tarcaye.monstertrainer.domain.Direction.*;
+import static fr.tarcaye.monstertrainer.domain.position.Direction.*;
 import static fr.tarcaye.monstertrainer.domain.Move.FORWARD;
-import static fr.tarcaye.monstertrainer.domain.Position.position;
+import static fr.tarcaye.monstertrainer.domain.position.Position.position;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,6 +1,7 @@
-package fr.tarcaye.monstertrainer.domain;
+package fr.tarcaye.monstertrainer.domain.position;
 
 import fr.tarcaye.monstertrainer.common.CircularList;
+import fr.tarcaye.monstertrainer.domain.Move;
 
 import java.util.Arrays;
 

@@ -1,5 +1,6 @@
-package fr.tarcaye.monstertrainer.domain;
+package fr.tarcaye.monstertrainer.domain.position;
 
+import fr.tarcaye.monstertrainer.domain.Move;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,21 +8,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
-class Position {
+public class Position {
 
     private final Coordinate coordinate;
     private final Direction direction;
 
-    Position(Coordinate coordinate, Direction direction) {
+    public Position(Coordinate coordinate, Direction direction) {
         this.coordinate = coordinate;
         this.direction = direction;
     }
 
-    static Position position(int x, int y, Direction direction) {
+    public static Position position(int x, int y, Direction direction) {
         return new Position(new Coordinate(x, y), direction);
     }
 
-    Position apply(Move move) {
+    public Position apply(Move move) {
         return new Position(applyToCoordinate(move), direction.apply(move));
     }
 

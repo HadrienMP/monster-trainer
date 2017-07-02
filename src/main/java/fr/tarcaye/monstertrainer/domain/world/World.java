@@ -1,6 +1,6 @@
 package fr.tarcaye.monstertrainer.domain.world;
 
-import fr.tarcaye.monstertrainer.domain.Coordinate;
+import fr.tarcaye.monstertrainer.domain.position.Coordinate;
 import lombok.ToString;
 
 import java.util.Collection;
@@ -25,7 +25,7 @@ public class World {
         return new WorldBuilder();
     }
 
-    public void placeTrainerAt(Coordinate coordinate) throws IllegalCoordinateException {
+    public void moveTrainerTo(Coordinate coordinate) throws IllegalCoordinateException {
         // todo test when trainer is placed outside the borders
         if (isLegal(coordinate)) {
             previousTrainerPlace = currentTrainerPlace;
